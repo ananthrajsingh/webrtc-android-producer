@@ -75,6 +75,7 @@ class MainActivity : AppCompatActivity() {
                 override fun onAddStream(p0: MediaStream?) {
                     super.onAddStream(p0)
                     p0?.videoTracks?.get(0)?.addSink(remote_view)
+                    val remoteAudioTrack = p0?.audioTracks?.get(0)
                 }
             }
         )

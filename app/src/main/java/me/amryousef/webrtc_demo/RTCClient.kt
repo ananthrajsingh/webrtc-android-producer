@@ -3,19 +3,13 @@ package me.amryousef.webrtc_demo
 import android.app.Application
 import android.content.Context
 import android.util.Log
-import org.webrtc.Camera2Enumerator
-import org.webrtc.DefaultVideoDecoderFactory
-import org.webrtc.DefaultVideoEncoderFactory
-import org.webrtc.EglBase
-import org.webrtc.IceCandidate
+import org.webrtc.*
+import org.webrtc.MediaStream
 import org.webrtc.MediaConstraints
-import org.webrtc.PeerConnection
-import org.webrtc.PeerConnectionFactory
-import org.webrtc.SdpObserver
-import org.webrtc.SessionDescription
-import org.webrtc.SurfaceTextureHelper
-import org.webrtc.SurfaceViewRenderer
-import org.webrtc.VideoCapturer
+
+
+
+
 
 class RTCClient(
     context: Application,
@@ -25,6 +19,7 @@ class RTCClient(
     companion object {
         private const val LOCAL_TRACK_ID = "local_track"
         private const val LOCAL_STREAM_ID = "local_track"
+        private const val AUDIO_TRACK_ID = "audio_local_track"
     }
 
     private val rootEglBase: EglBase = EglBase.create()
@@ -93,13 +88,24 @@ class RTCClient(
         val localVideoTrack = peerConnectionFactory.createVideoTrack(LOCAL_TRACK_ID, localVideoSource)
         localVideoTrack.addSink(localVideoOutput)
         val localStream = peerConnectionFactory.createLocalMediaStream(LOCAL_STREAM_ID)
+        // We start out with an empty MediaStream object,
+        // created with help from our PeerConnectionFactory
+        // Note that LOCAL_MEDIA_STREAM_ID can be any string
         localStream.addTrack(localVideoTrack)
+
+
+        val audioConstraints = MediaConstraints()
+        val audioSource = peerConnectionFactory.createAudioSource(audioConstraints)
+        val localAudioTrack = peerConnectionFactory.createAudioTrack(AUDIO_TRACK_ID, audioSource)
+        localAudioTrack.setEnabled(true)
+        localStream.addTrack(localAudioTrack)
         peerConnection?.addStream(localStream)
     }
 
     private fun PeerConnection.call(sdpObserver: SdpObserver) {
         val constraints = MediaConstraints().apply {
             mandatory.add(MediaConstraints.KeyValuePair("OfferToReceiveVideo", "true"))
+            mandatory.add(MediaConstraints.KeyValuePair("OfferToReceiveAudio", "true"))
         }
 
         Log.e("RTCClient", "Creating Offer")
@@ -134,6 +140,7 @@ class RTCClient(
     private fun PeerConnection.answer(sdpObserver: SdpObserver) {
         val constraints = MediaConstraints().apply {
             mandatory.add(MediaConstraints.KeyValuePair("OfferToReceiveVideo", "true"))
+            mandatory.add(MediaConstraints.KeyValuePair("OfferToReceiveAudio", "true"))
         }
 
         Log.e("RTCClient", "Creating Answer")

@@ -74,7 +74,7 @@ class SignallingClient(
             try {
                 while (true) {
 
-                    Log.v(this@SignallingClient.javaClass.simpleName, "Connect: while loop sendData.isEmpty(): ${sendData.isEmpty}")
+//                    Log.v(this@SignallingClient.javaClass.simpleName, "Connect: while loop sendData.isEmpty(): ${sendData.isEmpty}")
                     sendData.poll()?.let {
                         Log.v(this@SignallingClient.javaClass.simpleName, "Connect: Sending : $it")
                         outgoing.send(Frame.Text(it))
