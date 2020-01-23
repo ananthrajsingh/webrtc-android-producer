@@ -1,10 +1,8 @@
-package me.amryousef.webrtc_demo
+package me.ananth.webrtc_producer
 
 import android.Manifest
-import android.content.Context
 import android.content.pm.PackageManager
 import android.os.Bundle
-import android.os.PowerManager
 import android.util.Log
 import android.widget.Toast
 import androidx.appcompat.app.AlertDialog
@@ -13,10 +11,10 @@ import androidx.core.app.ActivityCompat
 import androidx.core.content.ContextCompat
 import androidx.core.view.isGone
 import io.ktor.util.KtorExperimentalAPI
-import kotlinx.android.synthetic.main.activity_main.call_button
+//import kotlinx.android.synthetic.main.activity_main.call_button
 import kotlinx.android.synthetic.main.activity_main.local_view
-import kotlinx.android.synthetic.main.activity_main.remote_view
-import kotlinx.android.synthetic.main.activity_main.remote_view_loading
+//import kotlinx.android.synthetic.main.activity_main.remote_view
+//import kotlinx.android.synthetic.main.activity_main.remote_view_loading
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 import org.webrtc.IceCandidate
 import org.webrtc.MediaStream
@@ -74,21 +72,21 @@ class MainActivity : AppCompatActivity() {
 
                 override fun onAddStream(p0: MediaStream?) {
                     super.onAddStream(p0)
-                    p0?.videoTracks?.get(0)?.addSink(remote_view)
-                    val remoteAudioTrack = p0?.audioTracks?.get(0)
+//                    p0?.videoTracks?.get(0)?.addSink(remote_view)
+//                    val remoteAudioTrack = p0?.audioTracks?.get(0)
                 }
             }
         )
-        rtcClient.initSurfaceView(remote_view)
+//        rtcClient.initSurfaceView(remote_view)
         rtcClient.initSurfaceView(local_view)
         rtcClient.startLocalVideoCapture(local_view)
         signallingClient = SignallingClient(createSignallingClientListener())
-        call_button.setOnClickListener { rtcClient.call(sdpObserver) }
+//        call_button.setOnClickListener { rtcClient.call(sdpObserver) }
     }
 
     private fun createSignallingClientListener() = object : SignallingClientListener {
         override fun onConnectionEstablished() {
-            call_button.isClickable = true
+//            call_button.isClickable = true
             Log.e("MainActivity", "SignallingClient onConnectionEstablished")
         }
 
@@ -96,15 +94,8 @@ class MainActivity : AppCompatActivity() {
             Log.e("MainActivity", "SignallingClient onOfferReceived: ${description.description}")
             rtcClient.onRemoteSessionReceived(description)
             rtcClient.answer(sdpObserver)
-            remote_view_loading.isGone = true
+//            remote_view_loading.isGone = true
         }
-
-        override fun onAnswerReceived(description: SessionDescription) {
-            Log.e("MainActivity", "SignallingClient onAnswerReceived: ${description.description}")
-            rtcClient.onRemoteSessionReceived(description)
-            remote_view_loading.isGone = true
-        }
-
         override fun onIceCandidateReceived(iceCandidate: IceCandidate) {
             Log.e("MainActivity", "SignallingClient onIceCandidateReceived: ${iceCandidate.sdp}")
             rtcClient.addIceCandidate(iceCandidate)

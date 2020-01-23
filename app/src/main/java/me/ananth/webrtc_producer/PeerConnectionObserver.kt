@@ -1,4 +1,4 @@
-package me.amryousef.webrtc_demo
+package me.ananth.webrtc_producer
 
 import org.webrtc.DataChannel
 import org.webrtc.IceCandidate

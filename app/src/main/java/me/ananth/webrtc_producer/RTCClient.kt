@@ -1,10 +1,9 @@
-package me.amryousef.webrtc_demo
+package me.ananth.webrtc_producer
 
 import android.app.Application
 import android.content.Context
 import android.util.Log
 import org.webrtc.*
-import org.webrtc.MediaStream
 import org.webrtc.MediaConstraints
 
 
@@ -102,40 +101,40 @@ class RTCClient(
         peerConnection?.addStream(localStream)
     }
 
-    private fun PeerConnection.call(sdpObserver: SdpObserver) {
-        val constraints = MediaConstraints().apply {
-            mandatory.add(MediaConstraints.KeyValuePair("OfferToReceiveVideo", "true"))
-            mandatory.add(MediaConstraints.KeyValuePair("OfferToReceiveAudio", "true"))
-        }
-
-        Log.e("RTCClient", "Creating Offer")
-        createOffer(object : SdpObserver by sdpObserver {
-            override fun onCreateSuccess(desc: SessionDescription?) {
-                Log.e("RTCClient", "Offer onCreateSuccess description: ${desc.toString()}")
-
-                setLocalDescription(object : SdpObserver {
-                    override fun onSetFailure(p0: String?) {
-                        Log.e("RTCClient", "call onSetFailure")
-                    }
-
-                    override fun onSetSuccess() {
-                        Log.e("RTCClient", "call onSetSuccess")
-                    }
-
-                    override fun onCreateSuccess(p0: SessionDescription?) {
-                        Log.e("RTCClient", "call onCreateSuccess")
-
-                    }
-
-                    override fun onCreateFailure(p0: String?) {
-                        Log.e("RTCClient", "call onCreateFailure")
-
-                    }
-                }, desc)
-                sdpObserver.onCreateSuccess(desc)
-            }
-        }, constraints)
-    }
+//    private fun PeerConnection.call(sdpObserver: SdpObserver) {
+//        val constraints = MediaConstraints().apply {
+//            mandatory.add(MediaConstraints.KeyValuePair("OfferToReceiveVideo", "true"))
+//            mandatory.add(MediaConstraints.KeyValuePair("OfferToReceiveAudio", "true"))
+//        }
+//
+//        Log.e("RTCClient", "Creating Offer")
+//        createOffer(object : SdpObserver by sdpObserver {
+//            override fun onCreateSuccess(desc: SessionDescription?) {
+//                Log.e("RTCClient", "Offer onCreateSuccess description: ${desc.toString()}")
+//
+//                setLocalDescription(object : SdpObserver {
+//                    override fun onSetFailure(p0: String?) {
+//                        Log.e("RTCClient", "call onSetFailure")
+//                    }
+//
+//                    override fun onSetSuccess() {
+//                        Log.e("RTCClient", "call onSetSuccess")
+//                    }
+//
+//                    override fun onCreateSuccess(p0: SessionDescription?) {
+//                        Log.e("RTCClient", "call onCreateSuccess")
+//
+//                    }
+//
+//                    override fun onCreateFailure(p0: String?) {
+//                        Log.e("RTCClient", "call onCreateFailure")
+//
+//                    }
+//                }, desc)
+//                sdpObserver.onCreateSuccess(desc)
+//            }
+//        }, constraints)
+//    }
 
     private fun PeerConnection.answer(sdpObserver: SdpObserver) {
         val constraints = MediaConstraints().apply {
@@ -169,7 +168,7 @@ class RTCClient(
         }, constraints)
     }
 
-    fun call(sdpObserver: SdpObserver) = peerConnection?.call(sdpObserver)
+//    fun call(sdpObserver: SdpObserver) = peerConnection?.call(sdpObserver)
 
     fun answer(sdpObserver: SdpObserver) = peerConnection?.answer(sdpObserver)
 

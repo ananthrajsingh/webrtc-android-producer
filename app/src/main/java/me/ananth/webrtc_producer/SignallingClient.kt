@@ -1,4 +1,4 @@
-package me.amryousef.webrtc_demo
+package me.ananth.webrtc_producer
 
 import android.util.Log
 import com.google.gson.Gson
@@ -91,7 +91,7 @@ class SignallingClient(
                                 } else if (jsonObject.has("type") && jsonObject.get("type").asString == "OFFER") {
                                     listener.onOfferReceived(gson.fromJson(jsonObject, SessionDescription::class.java))
                                 } else if (jsonObject.has("type") && jsonObject.get("type").asString == "ANSWER") {
-                                    listener.onAnswerReceived(gson.fromJson(jsonObject, SessionDescription::class.java))
+                                    // Do nothing
                                 }
                             }
                         }

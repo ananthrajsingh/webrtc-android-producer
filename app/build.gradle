@@ -7,7 +7,7 @@ apply plugin: 'kotlin-android-extensions'
 android {
     compileSdkVersion 28
     defaultConfig {
-        applicationId "me.amryousef.webrtc_demo"
+        applicationId "me.ananth.webrtc_producer"
         minSdkVersion 23
         targetSdkVersion 28
         versionCode 1

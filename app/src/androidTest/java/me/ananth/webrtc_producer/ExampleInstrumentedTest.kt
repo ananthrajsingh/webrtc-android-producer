@@ -1,4 +1,4 @@
-package me.amryousef.webrtc_demo
+package me.ananth.webrtc_producer
 
 import androidx.test.platform.app.InstrumentationRegistry
 import androidx.test.ext.junit.runners.AndroidJUnit4
